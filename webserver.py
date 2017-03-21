@@ -18,6 +18,11 @@ def test_json():
     root.info("testing ")
     return jsonify('test jsoninfo')
 
+
+@app.route('/get_test_json_return',methods=['POST'])
+def return_json():
+    return {"result":[{"row_name": "3"},{"row_name": "4"}]}
+
 app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=False)
