@@ -14,6 +14,7 @@ def hello_world():
 def test_json():
     print request.get_json()
     print request.data
+    print request.form
     root.info("testing ")
     return jsonify('test jsoninfo')
 
