@@ -1,0 +1,128 @@
+{
+  "$jason": {
+    "head": {
+      "title": "detail",
+      "actions": {
+        "$load": {
+          "type": "$network.request",
+          "options": {
+            "url": "get_content"
+          },
+          "success": {
+            "type": "$render"
+          }
+        }
+      },
+      "templates": {
+        "body": {
+          "sections": [
+
+            {
+            "items": {
+
+              "{{#each $jason.result}}": {
+                "type":"horizontal",
+                "components":[{
+
+                "type": "label",
+                "text": " {{event_name}}",
+                "style":{"color": "#8bb92d"}
+              },
+            {
+              "type": "label",
+              "text": " {{time_left}} days",
+              "style": { "font": "HelveticaNeue-Bold","color":"ffb3b3"  }
+            },
+            {
+              "type": "label",
+              "style": {
+                "font": "HelveticaNeue-Bold",
+                "color": "#00ff00"
+              },
+              "text": "finish",
+              "action": {
+                "type": "$network.request",
+                "options": {
+                  "url": "finsh",
+                  "method": "post",
+                  "data": {
+                    "event": "{{event_name}}"
+                  },
+                  "content_type": "json"
+                },
+                "success": {
+                  "type": "$reload"
+                }
+            }
+          },
+            {
+              "type": "label",
+              "style": {
+                "font": "HelveticaNeue-Bold",
+                "color": "#ff0000"
+              },
+              "text": "erase",
+              "action": {
+                "type": "$network.request",
+                "options": {
+                  "url": "erase",
+                  "method": "post",
+                  "data": {
+                    "event": "{{event_name}}"
+                  },
+                  "content_type": "json"
+                },
+                "success": {
+                  "type": "$reload"
+                }
+            }
+          }
+            ]
+              }
+            }
+          }],
+
+          "footer":{
+            "input": {
+            "name": "new_record",
+            "placeholder": "Say something...",
+            "right":{
+              "text": "Send",
+              "action": {
+                "type": "$network.request",
+                "options": {
+                  "url": "add",
+                  "method": "post",
+                  "data": {
+                    "new_record": "{{$get.new_record}}"
+                  }
+                },
+                "success": {
+                  "type": "$reload"
+
+                },
+                "error":{
+                  "type": "$util.banner",
+                  "options": {
+                    "title": "Result",
+                    "description": "{{$jason.result}}"
+                  }
+                }
+              }
+            }
+          }
+        }
+        }
+      }
+    },
+    "body":{
+      "header": {
+        "title": "detail",
+        "style": {
+          "background": "#646464",
+          "color": "#ffffff"
+        }
+      }
+    }
+  }
+}
